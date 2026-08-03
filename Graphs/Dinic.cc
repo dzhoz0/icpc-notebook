@@ -77,18 +77,3 @@ struct Dinic
         return ans;
     }
 };
-
-int n, m, s, t;
-Dinic fl;
-
-void solve(){
-    cin >> n >> m >> s >> t;
-    fl.init(n, s, t);
-    for(int i=1; i<=m; ++i){
-        int a, b;ll c;
-        cin >> a >> b >> c;
-        fl.adde(a, b, c);
-    }
-    cout << fl.maxflow() << '\n';
-}
-
