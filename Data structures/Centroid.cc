@@ -4,37 +4,7 @@ vector<int> adj[maxn];
 int dep[maxn], del[maxn], sz[maxn], binlift[maxn][20];
 int paric[maxn];
 vector<int> mintor(maxn, INF);
-void dfs(int a, int par){
-    for(auto &elm: adj[a]){
-        if(elm == par)continue;
-        binlift[elm][0] = a;
-        for(int i=1; i<20; ++i){
-            binlift[elm][i] = binlift[binlift[elm][i-1]][i-1];
-        }
-        dep[elm] = dep[a] + 1;
-        dfs(elm, a);
-    }
-}
-int lca(int a, int b){
-    if(dep[a] < dep[b])swap(a, b);
-    int k = dep[a] - dep[b];
-    for(int i=0; i<20; ++i){
-        if(k & (1 << i)){
-            a = binlift[a][i];
-        }
-    }
-    if(a == b)return a;
-    for(int i=19; i>=0; --i){
-        if(binlift[a][i] !=  binlift[b][i]){
-            a = binlift[a][i];
-            b = binlift[b][i];
-        }
-    }
-    return binlift[a][0];
-}
-inline int getdist(int a, int b){
-    return dep[a] + dep[b] - dep[lca(a, b)] * 2;
-}
+
 void predfs(int a, int par){
     sz[a] = 1;
     for(auto &elm: adj[a]){
