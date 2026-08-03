@@ -1,10 +1,8 @@
 const int maxn = 2e5 + 10;
 int tin[maxn], low[maxn], sz[maxn];
 vector<int> adj[maxn], bcadj[maxn], st;
-int id = 0, cc = 0;
-int ccsz = 0;
-int ans = 0;
-int n, m;
+int id = 0, cc = 0, ccsz = 0, ans = 0, n, m;
+
 void dfs(int a, int par){
     tin[a] = low[a] = ++id;
     ccsz++;
@@ -30,38 +28,4 @@ void dfs(int a, int par){
             }
         }
     }
-}
-void bctree(int a, int par){
-    sz[a] = (a <= n);
-    for(auto &elm: bcadj[a]){
-        if(elm == par)continue;
-        bctree(elm, a);
-        sz[a] += sz[elm];
-        if(a > n){
-            //a = bcc
-            ans -= (bcadj[a].size() - 1) * sz[elm] * (sz[elm] - 1);
-        }
-    }
-    if(a > n){
-        int num = ccsz - sz[a];
-        ans -= num * (num - 1) * (bcadj[a].size() - 1);
-    }
-}
-void solve(){
-    cin >> n >> m;
-    cc = n;
-    for(int i=1; i<=m; ++i){
-        int a, b;cin >> a >> b;
-        adj[a].push_back(b);
-        adj[b].push_back(a);
-    }
-    for(int i=1; i<=n; ++i){
-        if(!tin[i]){
-            ccsz = 0;
-            dfs(i, -1);
-            ans += ccsz * (ccsz - 1) * (ccsz - 2);
-            bctree(i, -1);
-        }
-    }
-    cout << ans << '\n';
 }
