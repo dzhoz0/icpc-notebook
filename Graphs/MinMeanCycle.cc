@@ -1,5 +1,5 @@
 /*
- Finds the min mean cycle, if you need the max mean cycle
+ Finds the min mean cycle (sum(w[e]) / cntedge), if you need the max mean cycle
  just add all the edges with negative cost and print ans * -1
  O(N * M)
  */
