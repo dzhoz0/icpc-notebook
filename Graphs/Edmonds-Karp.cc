@@ -1,9 +1,3 @@
-const int maxn = 1010;
-ll ans;
-int n, m, s, t;
-ll c[maxn][maxn], f[maxn][maxn], trace[maxn];
-vector<int> adj[maxn];
-
 void find_path(){
     for(int i=1; i<=n; ++i) trace[i] = 0;
     vector<ll> max_cap(n + 1, 0); 
@@ -46,15 +40,7 @@ void updans(){
         x = trace[x];
     }
 }
-
 void solve(){
-    cin >> n >> m >> s >> t;
-    for(int i=1; i<=m; ++i){
-        int x, y, z; cin >> x >> y >> z;
-        adj[x].push_back(y);
-        adj[y].push_back(x);
-        c[x][y] += z;
-    }
     ans = 0;
     while(1){
         find_path();
