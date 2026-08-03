@@ -100,18 +100,3 @@ struct MinCostFlow
         return ans;
     }
 };
-
-int n, m, s, t;
-MinCostFlow fl;
-
-void solve(){
-    cin >> n >> m >> s >> t;
-    fl.init(n, s, t);
-    for(int i=1; i<=m; ++i){
-        int x, y, c, w;
-        cin >> x >> y >> c >> w;
-        fl.adde(x, y, c, w);
-    }
-    int cc;cin >> cc;
-    cout << fl.mcflow(cc).fi << '\n'; // query mincost for min(maxflow, cc) flow
-}
