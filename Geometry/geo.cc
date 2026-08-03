@@ -57,3 +57,16 @@ bool is_ccw(Point a, Point b, Point c) {
     // cw: val < 0
     // collinear: val = 0
 }
+
+int angle_type(Point a, Point b, Point c) {
+    // checking angle type of bac
+    Point ab = b - a;
+    Point ac = c - a;
+    int x = dot_product(ab, ac);
+    // obtuse
+    if (x < 0) return 0;
+    // right
+    if (x == 0) return 1;
+    // acute
+    if (x > 0) return 2;
+}
