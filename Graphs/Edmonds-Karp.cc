@@ -1,3 +1,5 @@
+// Fat-Path Edmonds-Karp
+// O(m * m * log(n) * log(maxflow))
 void find_path(){
     for(int i=1; i<=n; ++i) trace[i] = 0;
     vector<ll> max_cap(n + 1, 0); 
