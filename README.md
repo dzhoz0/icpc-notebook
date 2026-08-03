@@ -4,5 +4,6 @@ Deps:
 
 To generate notebook like the in the repo:
 ```
-notebook-generator . --columns 3 --size 8
+chmod +x ./gen.sh
+./gen.sh
 ```
