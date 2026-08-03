@@ -1,83 +1,61 @@
-struct PersistentSegTree {
-    struct Node {
-        int val;
+class Chairman_Tree
+{
+private:
+    struct node{
         int l, r;
-
-        Node() : val(0), l(-1), r(-1) {}
-        Node(int v) : val(v), l(-1), r(-1) {}
-        Node(int v, int L, int R) : val(v), l(L), r(R) {}
-
-        Node operator+(const Node &other) const {
-            return Node(val + other.val);
+        int val;
+        node(){
+            l = 0;
+            r = 0;
+            val = 0;
         }
     };
-
-    vector<Node> st;
     int n;
-
-    void init(int _n) {
-        n = _n;
-        st.clear();
-        st.reserve(20 * n + 5);
-    }
-
-    int newNode(const Node &x = Node()) {
-        st.push_back(x);
-        return (int)st.size() - 1;
-    }
-
-    int build(int l, int r) {
-        int cur = newNode();
-
-        if (l == r)
-            return cur;
-
+    vector<node> tree;
+    int cntnode = 0;
+    int build(int l, int r){
+        int id = ++cntnode;
+        if(l == r)return id;
         int mid = (l + r) >> 1;
-
-        int left = build(l, mid);
-        int right = build(mid + 1, r);
-
-        st[cur] = st[left] + st[right];
-        st[cur].l = left;
-        st[cur].r = right;
-
-        return cur;
+        tree[id].l = build(l, mid);
+        tree[id].r = build(mid+1, r);
+        return id;
     }
-
-    int update(int cur, int l, int r, int pos, int val) {
-        if (pos < l || pos > r)
-            return cur;
-
-        if (l == r)
-            return newNode(Node(val));
-
+    int Point_Update(int cur, int l, int r, int pos){
+        int id = ++cntnode;
+        tree[id] = tree[cur];
+        if(l == r){
+            tree[id].val++;
+            return id;
+        }
         int mid = (l + r) >> 1;
-
-        int left = st[cur].l;
-        int right = st[cur].r;
-
-        if (pos <= mid)
-            left = update(left, l, mid, pos, val);
-        else
-            right = update(right, mid + 1, r, pos, val);
-
-        int me = newNode(st[left] + st[right]);
-        st[me].l = left;
-        st[me].r = right;
-
-        return me;
+        if(pos <= mid){
+            tree[id].l = Point_Update(tree[cur].l, l, mid, pos);
+        }
+        else{
+            tree[id].r = Point_Update(tree[cur].r, mid + 1, r, pos);
+        }
+        tree[id].val = tree[tree[id].l].val + tree[tree[id].r].val;
+        return id;
     }
-
-    int query(int cur, int l, int r, int L, int R) const {
-        if (R < l || r < L)
-            return 0;
-
-        if (L <= l && r <= R)
-            return st[cur].val;
-
+    int get(int id, int l, int r, int lo, int hi){
+        if(l > hi || r < lo)return 0;
+        else if(l >= lo && r <= hi){
+            return tree[id].val;
+        }
         int mid = (l + r) >> 1;
-
-        return query(st[cur].l, l, mid, L, R) +
-               query(st[cur].r, mid + 1, r, L, R);
+        return get(tree[id].l, l, mid, lo, hi) + get(tree[id].r, mid + 1, r, lo, hi);
+    }
+public:
+    int init(int len){
+        n = len;
+        tree.assign(20 * n, node());
+        return build(1, n);
+    }
+    int Point_Update(int root, int pos){
+        return Point_Update(root, 1, n, pos);
+    }
+    int get(int root, int l, int r){
+        return get(root, 1, n, l, r);
     }
 };
