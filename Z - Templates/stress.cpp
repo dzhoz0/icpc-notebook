@@ -3,13 +3,13 @@ using namespace std;
 const string NAME = "template";
 const int NTEST = 100;
 
-mt19937_64 rd(chrono::steady_clock::now().time_since_epoch().count());
-#define rand rd
+static mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
+#define rando(l, r) uniform_int_distribution<int> (l, r)(rng)
 
-
-long long Rand(long long L, long long R) {
-    assert(L <= R);
-    return L + rd() % (R - L + 1);
+void sinh(){
+    ofstream fout("inp.txt");
+    fout << rando(1, 8) << '\n';
+    fout.close();
 }
 
 int main()
@@ -17,9 +17,7 @@ int main()
     srand(time(NULL));
     for (int iTest = 1; iTest <= NTEST; iTest++)
     {
-        ofstream inp((NAME + ".inp").c_str());
-        // Test gen code here
-        inp.close();
+        sinh();
 
         // Change to "./" for Linux
         system((NAME + ".exe").c_str());
@@ -33,5 +31,6 @@ int main()
         }
         cout << "Test " << iTest << ": CORRECT!\n";
     }
+    cout << "Cubu\n";
     return 0;
 }
