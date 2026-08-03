@@ -1,12 +1,5 @@
-// Born_To_Laugh - Hughie Do
-#include <bits/stdc++.h>
-#define alle(AC) AC.begin(), AC.end()
-#define fi first
-#define se second
-using namespace std;
 typedef long long ll;
 typedef unsigned long long ull;
-[[maybe_unused]] const int MOD = 998244353, INF = 1e9 + 7;
 
 struct Factorizer
 {
@@ -104,16 +97,5 @@ struct Factorizer
     }
 };
 
-void solve(){
-    ll n;
-    cin >> n;
-    Factorizer fact;
-    vector<pair<ll, int>> factors = fact.get_factors(n);
-}
-signed main(){
-    freopen("inp.txt", "r", stdin);
-    freopen("out.txt", "w", stdout);
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-    solve();
-}
+// Usage: Factorizer fact; vector<pair<ll, int>> fact.get_factors(n)
+

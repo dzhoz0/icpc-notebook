@@ -1,13 +1,3 @@
-// Born_To_Laugh - Hughie Do
-#include <bits/stdc++.h>
-#define alle(AC) AC.begin(), AC.end()
-#define fi first
-#define se second
-using namespace std;
-typedef long long ll;
-[[maybe_unused]] const ll MOD = 998244353, INF = 3e18 + 7;
-
-// O(n * m + min(lim, maxflow) * m * log(n))
 struct MinCostFlow
 {
     struct edge
@@ -124,11 +114,4 @@ void solve(){
     }
     int cc;cin >> cc;
     cout << fl.mcflow(cc).fi << '\n'; // query mincost for min(maxflow, cc) flow
-}
-signed main(){
-    freopen("inp.txt", "r", stdin);
-    freopen("out.txt", "w", stdout);
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-    solve();
 }

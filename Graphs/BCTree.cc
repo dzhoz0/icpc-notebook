@@ -1,10 +1,3 @@
-// Born_To_Laugh - Hughie Do
-#include <bits/stdc++.h>
-#define alle(Lotus) Lotus.begin(), Lotus.end()
-using namespace std;
-typedef long long ll;
-[[maybe_unused]] const ll MOD = 998244353, INF = 1e9 + 7;
-#define int ll
 const int maxn = 2e5 + 10;
 int tin[maxn], low[maxn], sz[maxn];
 vector<int> adj[maxn], bcadj[maxn], st;
@@ -71,9 +64,4 @@ void solve(){
         }
     }
     cout << ans << '\n';
-}
-signed main(){
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-    solve();
 }

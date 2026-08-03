@@ -1,78 +1,44 @@
-// Born_To_Laugh - Hughie Do
-#include <bits/stdc++.h>
-#define alle(sth) sth.begin(), sth.end()
-using namespace std;
-typedef long long ll;
-[[maybe_unused]] const int MOD = 998244353, INF = 1e9 + 7;
-const int MAXN = 2;
-#define int ll
-class Matrix
-{
-public:
-    int row, col;
-    vector<vector<int>> val;
-    //val[row][col]
-    Matrix(int a = MAXN, int b = MAXN):
-        row(a), col(b), val(a, vector<int> (b, 0)){}
-
-    static Matrix base(int s){
-        Matrix a(s, s);
-        for(int i=0; i<s; ++i){
-            a.val[i][i] = 1;
-        }
-        return a;
+struct Matrix {
+    int n, m;
+    vector<vi> d;
+    void init(vector<vi> v) {
+        d = v;
+        n = v.size();
+        m = v[0].size();
     }
-    void init(vector<vector<int>> b){
-        row = b.size();
-        col = b[0].size();
-        val = b;
+ 
+    void I(int n) {
+        vector<vi> v(n, vi(n, 0));
+        for(int i = 0; i < n; i++) v[i][i] = 1; 
+        init(v);
     }
-
-    Matrix operator *(const Matrix& b){
-        Matrix c(row, b.col);
-        for(int i=0; i<row; ++i){
-            for(int j=0; j<b.col; ++j){
-                for(int x=0; x<col; ++x){//col = b.row
-                    c.val[i][j] += (ll)val[i][x] * b.val[x][j];
-                    c.val[i][j] %= INF;
+ 
+    Matrix operator*(Matrix &other) {
+        Matrix res;
+        res.n = n;
+        res.m = other.m;
+        res.d.resize(n, vi(m, 0));
+        for(int i = 0; i < res.n; i++) {
+            for(int j = 0; j < res.m; j++) {
+                for(int k = 0; k < other.n; k++) {
+                    res.d[i][j] += d[i][k] * other.d[k][j];
+                    res.d[i][j] %= MOD;
                 }
             }
         }
-        return c;
+        return res;
+    }
+ 
+    Matrix operator^(int k) {
+        assert(n == m);
+        Matrix res; res.I(n);
+        Matrix cur; cur.init(d);
+        while(k > 0) {
+            if(k & 1) res = res * cur;
+            cur = cur * cur;
+            k >>= 1; 
+        }
+        return res;
     }
 };
-Matrix powmod(Matrix a, int b){
-    Matrix ans = Matrix::base(a.row);
-    while(b){
-        if(b&1){
-            ans = ans*a;
-        }
-        a = a*a;
-        b = b >> 1;
-    }
-    return ans;
-}
-void solve(){
-    Matrix sth;
-    sth.init({
-        {0, 1},
-        {1, 1}
-    });
-    int n;cin >> n;
-    sth = powmod(sth, n-2);
-    if(n <= 2){
-        cout << 1 << '\n';
-        return;
-    }
-    Matrix ans;
-    ans.init({
-        {1, 1}
-    });
-    ans = ans * sth;
-    cout << ans.val[0][1];
-}
-signed main(){
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-    solve();
-}
+

@@ -1,15 +1,3 @@
-// Born_To_Laugh - Hughie Do
-#include <bits/stdc++.h>
-#define alle(AC) AC.begin(), AC.end()
-#define fi first
-#define se second
-using namespace std;
-typedef long long ll;
-[[maybe_unused]] const ll MOD = 998244353, INF = 3e18 + 7;
-
-// Fat-Path Edmonds-Karp
-// O(m * m * log(n) * log(maxflow))
-
 const int maxn = 1010;
 ll ans;
 int n, m, s, t;
@@ -74,12 +62,4 @@ void solve(){
         updans();
     }
     cout << ans << '\n';
-}
-
-signed main(){
-    freopen("inp.txt", "r", stdin);
-    freopen("out.txt", "w", stdout);
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-    solve();
 }

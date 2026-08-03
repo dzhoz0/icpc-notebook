@@ -1,150 +1,66 @@
-// Born_To_Laugh - Hughie Do
-#include <bits/stdc++.h>
-#define alle(AC) AC.begin(), AC.end()
-#define fi first
-#define se second
-using namespace std;
-typedef long long ll;
-[[maybe_unused]] const ll MOD = 998244353, INF = 1e9 + 7;
-class Chairman_Tree
-{
-private:
-    struct node{
-        int l, r;
-        int val;
-        node(){
-            l = 0;
-            r = 0;
-            val = 0;
+struct PersistentSegTree {
+    struct Node {
+        int val = 0;
+        int l = -1, r = -1;
+
+        Node() {}
+        Node(int v) : val(v) {}
+        Node(int v, int L, int R) : val(v), l(L), r(R) {}
+
+        Node operator+(const Node &a, const Node &b) {
+            return Node(a.val + b.val, a.l, b.r);
         }
     };
-    int n;
-    vector<node> tree;
-    int cntnode = 0;
-    int build(int l, int r){
-        int id = ++cntnode;
-        if(l == r)return id;
+
+    vector<Node> st;
+    int n, id;
+
+    void init(int _n){
+        n = _n; 
+        st.resize(20 * _n + 5);
+    }
+
+    int add_copy(int root) {
+        st.push_back(st[root]);
+        return id++;
+    }
+
+    int build(int l, int r) {
+        int my = id++;
+        st.emplace_back();
+        if (l == r) return my;
+
         int mid = (l + r) >> 1;
-        tree[id].l = build(l, mid);
-        tree[id].r = build(mid+1, r);
-        return id;
+        int left = build(l, mid);
+        int right = build(mid + 1, r);
+        st[my] = st[left] + st[right];
+        st[my].l = left;
+        st[my].r = right;
+        return my;
     }
-    int Point_Update(int cur, int l, int r, int pos){
-        int id = ++cntnode;
-        if(l == r){
-            tree[id].val = tree[cur].val + 1;
-            return id;
+
+    int update(int cur, int l, int r, int k, int x) {
+        if (k < l || k > r) return cur;
+        if (l == r) {
+            st.emplace_back(x);
+            return id++;
         }
-        tree[id].l = tree[cur].l;
-        tree[id].r = tree[cur].r;
+
         int mid = (l + r) >> 1;
-        if(pos <= mid){
-            tree[id].l = Point_Update(tree[cur].l, l, mid, pos);
-        }
-        else{
-            tree[id].r = Point_Update(tree[cur].r, mid + 1, r, pos);
-        }
-        tree[id].val = tree[tree[id].l].val + tree[tree[id].r].val;
-        return id;
+        int newLeft = update(st[cur].l, l, mid, k, x);
+        int newRight = updateRec(st[cur].r, mid + 1, r, k, x);
+        st.emplace_back(st[newLeft] + st[newRight]);
+        st.back().l = newLeft;
+        st.back().r = newRight;
+        return id++;
     }
-    int get(int id, int l, int r, int lo, int hi){
-        if(l > hi || r < lo)return 0;
-        else if(l >= lo && r <= hi){
-            return tree[id].val;
-        }
+
+    int queryRec(int cur, int l, int r, int L, int R) {
+        if (R < l || r < L) return 0;
+        if (L <= l && r <= R) return st[cur].val;
         int mid = (l + r) >> 1;
-        return get(tree[id].l, l, mid, lo, hi) + get(tree[id].r, mid + 1, r, lo, hi);
-    }
-    int walk(int l, int r, int a, int b, int c, int p, int x){
-        if(l == r)return r;
-        int sum = tree[tree[a].l].val + tree[tree[b].l].val
-            - (tree[tree[c].l].val + tree[tree[p].l].val);
-        int mid = (l + r) >> 1;
-        if(sum >= x){
-            return walk(l, mid, tree[a].l, tree[b].l, tree[c].l, tree[p].l, x);
-        }
-        else{
-            return walk(mid + 1, r, tree[a].r, tree[b].r, tree[c].r, tree[p].r, x - sum);
-        }
-    }
-public:
-    int init(int len){
-        n = len;
-        tree.assign(20 * n, node());
-        return build(1, n);
-    }
-    int Point_Update(int root, int pos){
-        return Point_Update(root, 1, n, pos);
-    }
-    int get(int root, int l, int r){
-        return get(root, 1, n, l, r);
-    }
-    int qr(int a, int b, int c, int p, int x){
-        return walk(1, n, a, b, c, p, x);
+        return queryRec(st[cur].l, l, mid, L, R) +
+               queryRec(st[cur].r, mid + 1, r, L, R);
     }
 };
-const int maxn = 1e5 + 10;
-Chairman_Tree ct;
-int ver[maxn], num[maxn], dep[maxn];
-int binlift[maxn][20], parr[maxn];
-vector<int> adj[maxn];
-int n, q;
-void dfs(int a, int par){
-    ver[a] = ct.Point_Update(ver[par], num[a]);
-    parr[a] = par;
-    dep[a] = dep[par] + 1;
-    for(auto &elm: adj[a]){
-        if(elm == par)continue;
-        binlift[elm][0] = a;
-        for(int i=1; i<20; ++i){
-            binlift[elm][i] = binlift[binlift[elm][i-1]][i-1];
-        }
-        dfs(elm, a);
-    }
-}
-int lca(int a, int b){
-    if(dep[a] < dep[b])swap(a, b);
-    int k = dep[a] - dep[b];
-    for(int i=0; i<20; ++i){
-        if(k & (1 << i))a = binlift[a][i];
-    }
-    if(a == b)return a;
-    for(int i=19; i>=0; --i){
-        if(binlift[a][i] != binlift[b][i]){
-            a = binlift[a][i];
-            b = binlift[b][i];
-        }
-    }
-    return binlift[a][0];
-}
-void solve(){
-    cin >> n >> q;
-    vector<int> temp;
-    for(int i=1; i<=n; ++i){
-        cin >> num[i];
-        temp.push_back(num[i]);
-    }
-    sort(alle(temp));
-    temp.erase(unique(alle(temp)), temp.end());
-    for(int i=1; i<=n; ++i){
-        num[i] = lower_bound(alle(temp), num[i]) - temp.begin() + 1;
-    }
-    for(int i=1; i<n; ++i){
-        int a, b; cin >> a >> b;
-        adj[a].push_back(b);
-        adj[b].push_back(a);
-    }
-    ver[0] = ct.init(temp.size() + 3);
-    dfs(1, 0);
-    while(q--){
-        int a, b, x;cin >> a >> b >> x;
-        int c = lca(a, b);
-        int ans = ct.qr(ver[a], ver[b], ver[c], ver[parr[c]], x);
-        cout << temp[ans - 1] << "\n";
-    }
-}
-signed main(){
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-    solve();
-}
+

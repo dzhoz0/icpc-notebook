@@ -1,43 +1,25 @@
-const int base = 31;
-const ll MOD = 1000000003;
-const ll maxn = 1000111;
-
-using namespace std;
-
-ll POW[maxn], hashT[maxn];
-
-
-ll getHashT(int i,int j) {
-    return (hashT[j] - hashT[i - 1] * POW[j - i + 1] + MOD * MOD) % MOD;
-}
-
-
-int main() {
-    // Input
-    string T, P;
-    cin >> T >> P;
-
-    // Initialize
-    int lenT = T.size(), lenP = P.size();
-    T = " " + T;
-    P = " " + P;
-    POW[0] = 1;
-
-    // Precalculate base^i
-    for (int i = 1; i <= lenT; i++)
-        POW[i] = (POW[i - 1] * base) % MOD;
-
-    // Calculate hash value of T[1..i]
-    for (int i = 1; i <= lenT; i++)
-        hashT[i] = (hashT[i - 1] * base + T[i] - 'a' + 1) % MOD;
-
-    // Calculate hash value of P
-    ll hashP=0;
-    for (int i = 1; i <= lenP; i++)
-        hashP = (hashP * base + P[i] - 'a' + 1) % MOD;
-
-    // Finding substrings of T equal to string P
-    for (int i = 1; i <= lenT - lenP + 1; i++)
-        if (hashP == getHashT(i, i + lenP - 1))
-            printf("%d ", i);
-}
+// Recommended to #define int ll here.
+struct Hash {
+    Hash() {}
+    const int BASE = 53;
+    vi pr = {1000000000 + 7, 998244353, 4518541637, 7385466377};
+    int mod;
+    int n;
+    vi hash, pw;
+    Hash(int p, string s) {
+        n = s.size();
+ 
+        mod = pr[p];
+        s = "@" + s;
+ 
+        pw.resize(n + 1);
+        hash.resize(n + 1);
+        pw[0] = 1;
+        for(int i = 1; i <= n; i++) pw[i] = (pw[i - 1] * BASE) % mod;
+        for(int i = 1; i <= n; i++) hash[i] = ((hash[i - 1] * BASE) + (s[i] - 'a' + 1)) % mod;
+    }
+ 
+    int get(int l, int r) {
+        return (hash[r] - hash[l - 1] * pw[r - l + 1] + mod * mod) % mod;
+    }
+};
