@@ -28,6 +28,8 @@ struct Line {
         C = 0;
     }
     Line(Point x, Point y) {
+        // u = y - x
+        // p = (-u.y, u.x) || p = (A, B)
         A = x.y - y.y;
         B = y.x - x.x;
         C = x.y * y.x - x.x * y.y;
