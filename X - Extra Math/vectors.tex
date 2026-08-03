@@ -1,0 +1,106 @@
+A vector in $\mathbb{R}^2$ is
+\[
+\vec{a} = (a_x, a_y), \quad
+|\vec{a}| = \sqrt{a_x^2 + a_y^2}, \quad
+\hat{a} = \frac{\vec{a}}{|\vec{a}|}.
+\]
+
+\subsection*{Basic Operations}
+\[
+\vec{a} \pm \vec{b} = (a_x \pm b_x,\, a_y \pm b_y), \qquad
+k\vec{a} = (k a_x,\, k a_y)
+\]
+
+\subsection*{Dot Product}
+\[
+\vec{a}\cdot\vec{b} = a_x b_x + a_y b_y = |\vec{a}||\vec{b}|\cos\theta
+\]
+\[
+\text{proj}_{\vec{b}}(\vec{a}) = \frac{\vec{a}\cdot\vec{b}}{|\vec{b}|^2}\vec{b}, \qquad
+\vec{a}\cdot\vec{b} = 0 \Rightarrow \text{orthogonal.}
+\]
+
+\subsection*{2D Cross Product (Scalar Form)}
+\[
+\text{cross2D}(\vec{a},\vec{b}) = a_x b_y - a_y b_x
+\]
+\[
+|\text{cross2D}(\vec{a},\vec{b})| = |\vec{a}||\vec{b}|\sin\theta
+\]
+This scalar represents the signed area of the parallelogram formed by $\vec{a}$ and $\vec{b}$.
+
+\subsection*{Areas}
+\[
+A_{\text{parallelogram}} = |\text{cross2D}(\vec{a},\vec{b})|, \qquad
+\]
+\[
+A_{\text{triangle}} = \frac{1}{2}|\text{cross2D}(\vec{a},\vec{b})|
+\]
+\[
+A_{\text{polygon}} =
+\frac{1}{2}\left|\sum_{i=0}^{n-1} (x_i y_{i+1} - y_i x_{i+1})\right|,
+\quad p_n = p_0.
+\]
+
+\subsection*{Centroid of a Polygon}
+\[
+C_x = \frac{1}{6A}\sum (x_i + x_{i+1})(x_i y_{i+1} - x_{i+1} y_i), \qquad
+\]
+\[
+C_y = \frac{1}{6A}\sum (y_i + y_{i+1})(x_i y_{i+1} - x_{i+1} y_i)
+\]
+\subsection*{Angle and Rotation}
+Angle between two vectors:
+\[
+\cos\theta = \frac{\vec{a}\cdot\vec{b}}{|\vec{a}||\vec{b}|}, \qquad
+\]
+\[
+\text{angle}(\vec{a},\vec{b}) = \operatorname{atan2}(\text{cross2D}(\vec{a},\vec{b}),\, \text{dot2D}(\vec{a},\vec{b}))
+\]
+Rotation of a vector by $\theta$:
+\[
+R_\theta(x,y) = (x\cos\theta - y\sin\theta,\; x\sin\theta + y\cos\theta)
+\]
+Rotation about point $P=(p_x,p_y)$:
+\[
+A' = P + R_\theta(A - P)
+\]
+
+\subsection*{Lines and Intersections}
+Equation of a line through points $A,B$:
+\[
+\vec{r}(t) = \vec{A} + t(\vec{B} - \vec{A})
+\]
+Intersection of lines:
+\[
+\vec{L_1}: \vec{r} = \vec{A} + t\vec{v}, \qquad
+\vec{L_2}: \vec{r} = \vec{B} + s\vec{w}
+\]
+Then
+\[
+t = \frac{\text{cross2D}(B-A,\,\vec{w})}{\text{cross2D}(\vec{v},\,\vec{w})}
+\]
+
+\subsection*{Distances}
+Distance from point $P$ to line $AB$:
+\[
+d = \frac{|\text{cross2D}(\vec{AP},\,\vec{AB})|}{|\vec{AB}|}
+\]
+
+\subsection*{Projections and Reflections (2D)}
+Projection of $\vec{a}$ onto unit direction $\hat{b}$:
+\[
+\vec{a}_{\parallel} = (\vec{a}\cdot\hat{b})\hat{b}
+\]
+Perpendicular component:
+\[
+\vec{a}_{\perp} = \vec{a} - \vec{a}_{\parallel}
+\]
+Reflection of $\vec{a}$ about unit normal $\hat{n}$:
+\[
+\vec{a'} = \vec{a} - 2(\vec{a}\cdot\hat{n})\hat{n}
+\]
+Projection of $\vec{a}$ onto line with normal $\hat{n}$:
+\[
+\vec{a'} = \vec{a} - (\vec{a}\cdot\hat{n})\hat{n}
+\]

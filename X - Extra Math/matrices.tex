@@ -1,0 +1,26 @@
+\subsection*{Linear recurrences / Companion matrix}
+
+Consider the linear recurrence
+\[
+f_n = \sum_{i=1}^k c_i\, f_{n-i}, \qquad n\ge k,
+\]
+with initial values $f_0,\dots,f_{k-1}$.  Define the $k\times k$ companion matrix $T$ and the $k\times 1$ column vector $F_m$ by
+\[
+T =
+\begin{pmatrix}
+0 & 1 & 0 & \cdots & 0\\[2pt]
+0 & 0 & 1 & \cdots & 0\\[2pt]
+\vdots & \vdots & \vdots & \ddots & \vdots\\[2pt]
+0 & 0 & 0 & \cdots & 1\\[2pt]
+c_k & c_{k-1} & c_{k-2} & \cdots & c_1
+\end{pmatrix},
+\qquad
+F_m =
+\begin{pmatrix}
+f_m\\[4pt]
+f_{m+1}\\[4pt]
+\vdots\\[4pt]
+f_{m+k-1}
+\end{pmatrix}.
+\]
+
