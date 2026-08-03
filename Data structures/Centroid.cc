@@ -1,11 +1,3 @@
-// Born_To_Laugh - Hughie Do
-#include <bits/stdc++.h>
-#define alle(AC) AC.begin(), AC.end()
-#define fi first
-#define se second
-using namespace std;
-typedef long long ll;
-[[maybe_unused]] const ll MOD = 998244353, INF = 1e9 + 7;
 const int maxn = 1e5 + 10;
 int n, q;
 vector<int> adj[maxn];
@@ -83,31 +75,4 @@ int ope2(int a){
         b = paric[b];
     }
     return ans;
-}
-void solve(){
-    cin >> n >> q;
-    for(int i=1; i<n; ++i){
-        int a, b;cin >> a >> b;
-        adj[a].push_back(b);
-        adj[b].push_back(a);
-    }
-    dfs(1, -1);
-    decom(1, -1);
-    ope1(1);
-    while(q--){
-        int sth;cin >> sth;
-        if(sth & 1){
-            int x;cin >> x;
-            ope1(x);
-        }
-        else{
-            int x;cin >> x;
-            cout << ope2(x) << '\n';
-        }
-    }
-}
-signed main(){
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-    solve();
 }
