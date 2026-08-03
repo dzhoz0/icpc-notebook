@@ -19,9 +19,7 @@ bool checkin_hull(Point k, const std::vector<Point> &hull) {
         }
     }
 
-    if (ans == -1) {
-        return false;
-    }
+    if (ans == -1) return false;
 
     return (area_triangle(hull[0], hull[ans], hull[ans - 1]) ==
     area_triangle(hull[0], hull[ans - 1], k) +
