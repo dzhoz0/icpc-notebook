@@ -15,7 +15,7 @@ where $A_i'$ is $A$ with the $i$'th column replaced by $b$.
 \subsection{Trigonometry and Triangles}
 \begin{align*}
 \sin(v+w)&{}=\sin v\cos w+\cos v\sin w\\
-cos(v+w)&{}=\cos v\cos w-\sin v\sin w\\
+\cos(v+w)&{}=\cos v\cos w-\sin v\sin w\\
 % \end{align*}
 % \begin{align*}
 \tan(v+w)&{}=\dfrac{\tan v+\tan w}{1-\tan v\tan w}\\
@@ -95,7 +95,13 @@ $$a + ar + a r^2 + a r^3 + \cdots + a r^{n-1} = \sum_{k=0}^{n-1} ar^k= a \left(\
 \sum_{k=0}^{n} k\binom{n}{k} = n2^{n-1}, \quad \sum_{k=0}^{n} k^2\binom{n}{k} = n(n+1)2^{n-2}
 \]
 \[
-\binom{r}{k} = \frac{r(r-1)\dots(r-k+1)}{k!} \quad
+\binom{r}{k} = \frac{r(r-1)\dots(r-k+1)}{k!}
+\]
+\[
+\binom{r}{k} = (-1)^k \binom{k-r-1}{k} \quad \text{(Upper negation)}
+\]
+\[
+\binom{n+k}{k} = (-1)^k \binom{-n-1}{k}, \quad \binom{-n}{k} = (-1)^k \binom{n+k-1}{k}
 \]
 
 \subsubsection*{Binomial theorem}
@@ -154,7 +160,10 @@ C_n = \frac{(2n)!}{n!(n+1)!} \quad \]
 
 \subsubsection*{Other useful sums}
 \[
-\sum_{k=0}^{n}\binom{r+k}{k} = \binom{r+n+1}{n}, \quad
+\sum_{i=r}^{n} \binom{i}{r} = \binom{n+1}{r+1} \quad \text{(Hockey-stick identity)}
+\]
+\[
+\sum_{k=0}^{n}\binom{r+k}{k} = \binom{r+n+1}{n} \quad \text{(Hockey-stick, diagonal form)}
 \]
 \[
 \sum_{k=0}^{n}(-1)^k\binom{r}{k} = (-1)^n\binom{r-1}{n}
@@ -165,4 +174,3 @@ C_n = \frac{(2n)!}{n!(n+1)!} \quad \]
 \[
 \sum_{k=0}^{n} k\binom{r+k}{k} = (n+1)\binom{r+n+1}{n-1}
 \]
-
